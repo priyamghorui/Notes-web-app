@@ -1,0 +1,320 @@
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+
+    <link
+      href="css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <style>
+      .cardHover:hover{ border-color: rgb(18, 167, 236); box-shadow: 9px 9px
+      9px; }
+    </style>
+    <title>Hello, world!</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            {{!-- <li class="nav-item">
+              <a class="nav-link" href="/del">del</a>
+            </li> --}}
+          </ul>
+
+          <form class="d-flex">
+            <input
+              id="search"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search by Titel"
+              aria-label="Search"
+            />
+            <div class="form-check mx-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+                value="titel"
+                checked
+              />
+              <label
+                class="form-check-label text-light"
+                for="flexRadioDefault1"
+              >
+                Titel
+              </label>
+            </div>
+            <div class="form-check mx-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                value="massage"
+                
+                
+              />
+              <label
+                class="form-check-label text-light"
+                for="flexRadioDefault2"
+              >
+                Massage
+              </label>
+            </div>
+            {{! <button
+              class="btn btn-outline-success"
+              type="submit"
+            >Search</button> }}
+          </form>
+        </div>
+      </div>
+    </nav>
+    {{#if workDone}}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Delete Successfully</strong>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    {{/if}}
+    {{#if updateworkDone}}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Update Successfully</strong>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    {{/if}}
+    <form class="container" action="/" method="POST">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Titel</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          name="titel"
+        />
+        <div id="emailHelp" class="form-text">Write titel here.</div>
+      </div>
+      <div class="mb-3">
+        <label for="massage" class="form-label" id="mass">Massage</label>
+        <textarea
+          name="massage"
+          id="massage"
+          class="form-control"
+          cols="30"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div class="container d-flex flex-row flex-wrap" id="con">
+      {{#each this.data as |data|}}
+        <div class="card m-2 cardHover" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title seachusetitel" id="conin">{{data.titel}}</h5>
+            <input hidden type="text" name="" value="{{data._id}}" />
+            <div class="seachusemassage">
+
+              {{#each data.massage as |data|}}
+                <p class="card-text">{{data}}</p>
+              {{/each}}
+            </div>
+            <button
+              type="button"
+              onclick="hello('{{data._id}}','asd')"
+              class="btn btn-danger"
+            >Delete</button>
+            <button
+              type="button"
+              class="btn btn-primary updateb"
+            >Update</button>
+
+          </div>
+        </div>
+
+      {{/each}}
+    </div>
+    <!-- Button trigger modal -->
+    <button
+      hidden
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      id="hidebtn"
+      data-bs-target="#exampleModal"
+    >
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure to delete?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+            <button
+              type="button"
+              id="modalbtn"
+              class="btn btn-danger"
+            >confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button
+      hidden
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      id="updatebtnmodal"
+      data-bs-target="#updateexampleModal"
+    >
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="updateexampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/update" method="POST">
+              <div class="mb-3">
+                <input hidden type="text" name="update_id" id="update_id" />
+                <label for="updatetitel" class="form-label">Email address</label>
+                <input
+                  name="updatetitel"
+                  type="text"
+                  class="form-control"
+                  id="updatetitel"
+                  aria-describedby="emailHelp"
+                />
+                <div id="emailHelp" class="form-text">We'll never share your
+                  email with anyone else.</div>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="updatemassage"
+                  class="form-label"
+                  id="mass"
+                >Massage</label>
+                <textarea
+                  name="updatemassage"
+                  id="updatemassage"
+                  class="form-control"
+                  cols="30"
+                  rows="3"
+                ></textarea>
+              </div>
+              {{! <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div> }}
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/index.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    -->
+  </body>
+
+</html>
